@@ -1,0 +1,11 @@
+# Regime Classifier Parameters
+# Derived from Phase 1 empirical diagnostic on historical crypto data
+
+hurst:
+  trending_threshold: 0.58
+  mean_revert_threshold: 0.48
+  min_window_length: 20
+
+variance_ratio:
+  lag: 2
+  significance_level: 0.0  # VR >= 1.0 for trending, VR <= 1.0 for mean-reverting

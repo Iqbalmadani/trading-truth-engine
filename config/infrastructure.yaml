@@ -1,0 +1,43 @@
+# Parameter infrastruktur — bukan data judgment
+# Setara dengan PENALTY_CANDIDATES: manusia sediakan, data yang jalankan
+
+# REMOVED: leverage_max — now fetched from exchange API at runtime
+# No human defaults allowed. Data is the only judge.
+
+retry:
+  max_attempts: 3
+  delay_seconds: 1
+
+request:
+  timeout_seconds: 10
+
+timestamp:
+  # Data lebih tua dari N interval dianggap basi
+  max_staleness_intervals: 2
+
+# Calibration infrastructure parameters
+# Dua parameter ini auto-adjust per timeframe.
+# Tidak perlu diubah saat menambah pair/exchange/TF baru.
+calibration:
+  # Berapa hari data yang dilihat PELT (solve latency)
+  # Formula: window = (window_days * 86400) / TF_seconds
+  # Clamped antara min_window dan max_window
+  window_days: 7
+
+  # Setiap berapa candle baru, recalibrate (solve scheduling)
+  # Formula: interval = interval_candles * TF_seconds
+  # TF 5m → setiap 2 jam, TF 1h → setiap 24 jam, TF 1d → setiap 24 hari
+  interval_candles: 24
+
+  # Batas statistik minimum untuk PELT
+  min_window: 50
+
+  # Batas komputasi maximum untuk PELT (O(n²))
+  max_window: 500
+
+  # Berapa candle maksimum sinyal boleh PENDING sebelum expired
+  # Sinyal yang terlalu lama PENDING sudah tidak relevan:
+  # - SL/TP level dari regime yang mungkin sudah berubah
+  # - Kategori B evaluator menerima data basi
+  # Ini parameter infrastruktur (seperti timeout), bukan data judgment
+  max_pending_candles: 48

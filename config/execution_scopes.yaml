@@ -1,0 +1,69 @@
+# Execution Scopes — Layer 3 Scope Definitions
+#
+# Mendefinisikan scope instrumen eksekusi secara eksplisit.
+# Sama seperti sources.yaml mendefinisikan scope analisis di Layer 2.
+#
+# Dua kategori:
+#   - structural: dikalibrasi dari data market via CH (sudah ada)
+#   - outcome: dikalibrasi dari data outcome/hasil trading (Phase 3)
+#
+# Menambah scope baru = tambah entry di sini + implementasi evaluator.
+
+scopes:
+  # ============================================================
+  # Kategori A: Statistika Struktural
+  # Dikalibrasi dari data market SEKARANG menggunakan CH
+  # Status: SUDAH ADA dan AKTIF
+  # ============================================================
+
+  entry_signal:
+    category: structural
+    calibration: meta_learning_ch
+    source: score_history
+    description: "Menentukan entry LONG/SHORT/Neutral dari threshold CPD"
+    status: active
+
+  regime_detection:
+    category: structural
+    calibration: meta_learning_ch
+    source: price_history
+    description: "Mendeteksi rezim harga untuk batas SL/TP"
+    status: active
+
+  # ============================================================
+  # Kategori B: Kualitas Eksekusi
+  # Dikalibrasi dari data outcome yang dikirim oleh Signal Logger
+  # Status: BELUM AKTIF — menunggu 50+ sinyal per combo
+  # ============================================================
+
+  sl_quality:
+    category: outcome
+    calibration: signal_outcome
+    source: signal_history
+    description: "Evaluasi efektivitas penempatan stop loss"
+    min_signals: 50
+    status: pending_data
+
+  tp_quality:
+    category: outcome
+    calibration: signal_outcome
+    source: signal_history
+    description: "Evaluasi realisasi target profit"
+    min_signals: 50
+    status: pending_data
+
+  leverage_quality:
+    category: outcome
+    calibration: signal_outcome
+    source: signal_history
+    description: "Evaluasi kesesuaian ukuran leverage"
+    min_signals: 50
+    status: pending_data
+
+  signal_confidence:
+    category: outcome
+    calibration: signal_outcome
+    source: signal_history
+    description: "Evaluasi profitabilitas per jenis sinyal"
+    min_signals: 50
+    status: pending_data

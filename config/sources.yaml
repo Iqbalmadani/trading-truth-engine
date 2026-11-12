@@ -1,0 +1,58 @@
+# Daftar scope yang diverifikasi oleh Layer 1
+# Menambah scope baru = menambah entry di sini + connector baru
+# Tidak ada perubahan logika yang diperlukan
+
+scopes:
+  ohlcv:
+    data_type: historical
+    description: "Candlestick OHLCV data"
+    # dynamic = follows user's timeframe (technical fact: candles update per interval)
+    update_interval_seconds: dynamic
+    required_fields:
+      - open
+      - high
+      - low
+      - close
+      - volume
+      - timestamp
+
+  funding_rate:
+    data_type: historical
+    description: "Perpetual futures funding rate"
+    # 28800s = 8h, from Gate.io/Binance API spec (not human judgment)
+    update_interval_seconds: 28800
+    required_fields:
+      - rate
+      - timestamp
+
+  open_interest:
+    data_type: snapshot
+    description: "Perpetual futures open interest"
+    # dynamic = follows user's timeframe (OI snapshots update per interval)
+    update_interval_seconds: dynamic
+    required_fields:
+      - value
+      - timestamp
+
+  volatility_compression:
+    data_type: historical
+    description: "Recent volatility measurement (standard deviation of returns)"
+    # dynamic = follows user's timeframe (volatility changes per interval)
+    update_interval_seconds: dynamic
+    required_fields:
+      - volatility_percent
+      - timestamp
+
+# Platform yang didukung — batas sistem, bukan judgment data
+platforms:
+  - gateio
+  - binance
+
+# Tipe pasar yang didukung
+market_types:
+  - perpetual
+  - spot
+  - quarterly
+
+# Default market type
+default_market_type: perpetual

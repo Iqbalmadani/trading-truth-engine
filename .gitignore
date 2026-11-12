@@ -1,0 +1,33 @@
+# Local runtime data and history
+data/
+logs/
+*.log
+
+# Python environments and cache
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# IDE / OS
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db
+
+# Environment files and secrets
+.env
+.env.*
+*.secret
+
+# SQLite files and sidecars, wherever created
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite-*

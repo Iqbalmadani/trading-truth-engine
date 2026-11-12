@@ -1,0 +1,35 @@
+[project]
+name = "trading-truth-engine"
+version = "0.1.0"
+description = "Experimental cryptocurrency market-data analysis and signal research"
+requires-python = ">=3.12"
+readme = "README.md"
+license = "MIT"
+dependencies = [
+    "requests>=2.31.0",
+    "pyyaml>=6.0.1",
+    "ruptures>=1.1.7",
+    "numpy>=1.24.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+namespaces = false
+
+[tool.pyright]
+pythonVersion = "3.14"
+extraPaths = ["src"]
+include = ["src"]
